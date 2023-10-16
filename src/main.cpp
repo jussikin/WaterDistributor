@@ -40,8 +40,16 @@ void setState(State newState) {
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+
    String topicStr = String(topic);
-    String payloadStr = String((char*)payload);
+   String payloadStr = "";
+   for (int i = 0; i < length; i++) {
+    payloadStr += (char)payload[i];
+   }
+    Serial.print(payloadStr);
+    Serial.println("] ");
     if(topicStr == COMMAND_TOPIC){
       if(payloadStr == "greenhouse1"){
         setState(State::GREENHOUSE1);  
